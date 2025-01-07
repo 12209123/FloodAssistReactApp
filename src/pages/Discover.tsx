@@ -1,31 +1,12 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { Link } from "react-router-dom";
+import { emergencies } from "../data/emergencies";
 
 const MapView: React.FC = () => {
-  // Example center coordinates (Linz, Austria area)
   const mapCenter = [48.30694, 14.28583];
   const zoomLevel = 12;
-
-  // Example data for your waypoints/markers
-  const waypoints = [
-    {
-      position: [48.329, 14.294],
-      label: "Willersdorf Marker",
-      popupContent: "This is a marker near Willersdorf",
-    },
-    {
-      position: [48.315, 14.25],
-      label: "Oberbairing Marker",
-      popupContent: "This is a marker near Oberbairing",
-    },
-    {
-      position: [48.31, 14.31],
-      label: "Außertreffling Marker",
-      popupContent: "This is a marker near Außertreffling",
-    },
-  ];
 
   return (
     <div className="map-container" style={{ height: "100vh", width: "100%" }}>
@@ -40,12 +21,18 @@ const MapView: React.FC = () => {
           OpenStreetMap</a> contributors'
         />
 
-        {waypoints.map((waypoint, idx) => (
-          <Marker key={idx} position={waypoint.position}>
+        {emergencies.map((emergencies, idx) => (
+          <Marker key={idx} position={emergencies.position}>
             <Popup>
-              <strong>{waypoint.label}</strong>
+              <strong>{emergencies.title}</strong>
               <br />
-              {waypoint.popupContent}
+              {emergencies.description}
+              <br />
+              <strong>Priority:</strong> {emergencies.priority}
+              <br />
+              <Link to={`/emergency/${emergencies.id}`}>
+                <button style={{ marginTop: "8px" }}>More Details</button>
+              </Link>
             </Popup>
           </Marker>
         ))}
