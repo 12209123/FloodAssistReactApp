@@ -1,17 +1,9 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import * as L from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Force TypeScript to allow access to _getIconUrl
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-(L.Icon.Default as any).mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-});
-
-function MapView() {
+const MapView: React.FC = () => {
   // Example center coordinates (Linz, Austria area)
   const mapCenter = [48.30694, 14.28583];
   const zoomLevel = 12;
@@ -36,18 +28,12 @@ function MapView() {
   ];
 
   return (
-    <div
-      className="map-container"
-      style={{ height: "80vh", width: "100%", margin: "0 auto" }}>
+    <div className="map-container" style={{ height: "100vh", width: "100%" }}>
       <MapContainer
         center={mapCenter}
         zoom={zoomLevel}
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}>
-        {/*
-          A TileLayer is required for basic map tiles.
-          You can use different tile providers like OpenStreetMap, Mapbox, etc.
-        */}
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://osm.org/copyright">
@@ -66,6 +52,6 @@ function MapView() {
       </MapContainer>
     </div>
   );
-}
+};
 
 export default MapView;
