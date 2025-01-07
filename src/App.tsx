@@ -9,11 +9,13 @@ import Coupons from './pages/Coupons';
 import CreateTask from './pages/CreateTask';
 import Account from './pages/Account';
 import Settings from './pages/Settings';
+import CustomNavbar from "./CustomNavbar";
 
 
 function App() {
   return (
     <Router>
+      <CustomNavbar />
       <Routes>
         {/* Define Routes for different pages */}
         <Route path="/" element={<Discover />} />
