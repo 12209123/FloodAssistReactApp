@@ -13,9 +13,9 @@ function EmergencyDetail() {
   const [showUnregister, setShowUnregister] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [showAlreadyRegisteredToast, setShowAlreadyRegisteredToast] = useState(false);
+  const [showAlreadyRegisteredToast, setShowAlreadyRegisteredToast] =
+    useState(false);
   const [showRemovedToast, setShowRemovedToast] = useState(false);
- 
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate(); // <-- to navigate programmatically
@@ -136,7 +136,7 @@ function EmergencyDetail() {
     setSelectedUsers([]);
 
     // Navigate back to the map
-    navigate("/", {state:{ showRemovedToast: true }});
+    navigate("/", { state: { showRemovedToast: true } });
   };
 
   const handleCancelClose = () => {
@@ -161,7 +161,13 @@ function EmergencyDetail() {
           <Button variant="secondary" onClick={() => setShowUnregister(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => {setCurrentRegisteredEmergency(null);setIsRegistered(false);setShowUnregister(false);}}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setCurrentRegisteredEmergency(null);
+              setIsRegistered(false);
+              setShowUnregister(false);
+            }}>
             Unregister
           </Button>
         </Modal.Footer>
@@ -175,7 +181,11 @@ function EmergencyDetail() {
           <Button variant="secondary" onClick={() => setShowReport(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => {setShowReport(false);}}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setShowReport(false);
+            }}>
             Report
           </Button>
         </Modal.Footer>
@@ -184,27 +194,40 @@ function EmergencyDetail() {
         <Modal.Header closeButton>
           <Modal.Title>Confirm</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to confirm this emergency?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to confirm this emergency?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowConfirm(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => {setShowConfirm(false);}}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setShowConfirm(false);
+            }}>
             Confirm
           </Button>
         </Modal.Footer>
       </Modal>
-      <Toast style={{position:"fixed"}} show={showAlreadyRegisteredToast} onClose={() => setShowAlreadyRegisteredToast(false)}>
+      <Toast
+        style={{ position: "fixed" }}
+        show={showAlreadyRegisteredToast}
+        onClose={() => setShowAlreadyRegisteredToast(false)}>
         <Toast.Header></Toast.Header>
-        <Toast.Body>Already registered to another emergency. Unregister first.</Toast.Body>
+        <Toast.Body>
+          Already registered to another emergency. Unregister first.
+        </Toast.Body>
       </Toast>
-    
+
       <h2>{waypoint.title}</h2>
       <p>{waypoint.description}</p>
       <p>
         <strong>Priority:</strong> {waypoint.priority}
       </p>
-      <p>Owner ID: {waypoint.ownerId ?? "Unknown"}</p>
+      <p>
+        <strong>Type:</strong> {waypoint.type}
+      </p>
 
       {/* If user is the owner, only show "Close Emergency" */}
       {isOwner ? (
@@ -242,7 +265,7 @@ function EmergencyDetail() {
 
       {/* Show chat if user is owner OR registered */}
       {showChat && (
-        <div style={{ marginTop: "2rem", maxWidth: "500px", margin:"auto"}}>
+        <div style={{ marginTop: "2rem", maxWidth: "500px", margin: "auto" }}>
           <h3>Local Chat</h3>
           <div
             ref={chatContainerRef}
