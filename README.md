@@ -47,27 +47,30 @@ A **React based Emergency Management Application** that allows users to create, 
 
 ### Root Directory
 
-- **`App.tsx`**  
-  - Entry point of the application.  
-  - Defines routing for all pages and serves as the main component connecting the app's structure.  
+- **`App.tsx`**
 
-- **`App.css`**  
-  - Global CSS for styling the application.  
+  - Entry point of the application.
+  - Defines routing for all pages and serves as the main component connecting the app's structure.
 
-- **`CustomNavbar.tsx`**  
-  - A reusable navigation bar component used across the app.  
+- **`App.css`**
+
+  - Global CSS for styling the application.
+
+- **`CustomNavbar.tsx`**
+
+  - A reusable navigation bar component used across the app.
   - Includes links to different pages (e.g., Discover, Coupons, Account).
 
-- **`globalRegistrationStore.ts`**  
-  - Manages global state for the user's current registered emergency and user ID.  
+- **`globalRegistrationStore.ts`**
+  - Manages global state for the user's current registered emergency and user ID.
   - Acts as a centralized store to track global interactions.
 
 ---
 
 ### Data Directory (`/data`)
 
-- **`emergencies.ts`**  
-  - Mock data structure for emergencies.  
+- **`emergencies.ts`**
+  - Mock data structure for emergencies.
   - Stores static emergency data (e.g., priority, type, position, owner) and serves as the application's data source.
 
 ---
@@ -76,54 +79,65 @@ A **React based Emergency Management Application** that allows users to create, 
 
 Each file in the `pages/` directory represents a route in the application:
 
-- **`Account.tsx`**  
-  - Displays user account information and settings. 
+- **`Account.tsx`**
 
-- **`CouponDetail.tsx`**  
-  - Provides detailed information about a selected coupon, including a redemption timer and participating stores.  
+  - Displays user account information and settings.
 
-- **`Coupons.tsx`**  
-  - Lists all available coupons with details like description and expiration date.  
+- **`CouponDetail.tsx`**
 
-- **`CreateTask.tsx`**  
-  - Form to create a new emergency.  
-  - Allows users to select a position on the map and input emergency details (e.g., title, priority).  
+  - Provides detailed information about a selected coupon, including a redemption timer and participating stores.
 
-- **`CurrentTask.tsx`**  
-  - Displays the user's currently registered emergency, including its details.  
+- **`Coupons.tsx`**
 
-- **`Discover.tsx`**  
-  - The main map view of the application, built with React Leaflet.  
-  - Displays all emergencies as markers and includes filtering options for priority and type.  
+  - Lists all available coupons with details like description and expiration date.
 
-- **`Emergency.tsx`**  
-  - Provides detailed information about a specific emergency when selected.  
-  - Allows users to register or close emergencies (for owners).  
+- **`CreateTask.tsx`**
 
-- **`Settings.tsx`**  
-  - A placeholder page for app settings and customization options.  
+  - Form to create a new emergency.
+  - Allows users to select a position on the map and input emergency details (e.g., title, priority).
+
+- **`CurrentTask.tsx`**
+
+  - Displays the user's currently registered emergency, including its details.
+
+- **`Discover.tsx`**
+
+  - The main map view of the application, built with React Leaflet.
+  - Displays all emergencies as markers and includes filtering options for priority and type.
+
+- **`Emergency.tsx`**
+
+  - Provides detailed information about a specific emergency when selected.
+  - Allows users to register or close emergencies (for owners).
+
+- **`Settings.tsx`**
+  - A placeholder page for app settings and customization options.
 
 ---
 
 ### Summary of File Purposes
 
-1. **Routing and Entry Point**:  
+1. **Routing and Entry Point**:
+
    - `App.tsx`: Connects and routes all pages in the app.
 
-2. **Global State and Data**:  
-   - `globalRegistrationStore.ts`: Centralized store for tracking global app state.  
-   - `emergencies.ts`: Mock data source for emergency information.  
+2. **Global State and Data**:
 
-3. **UI Components**:  
-   - `CustomNavbar.tsx`: Handles navigation across pages.  
+   - `globalRegistrationStore.ts`: Centralized store for tracking global app state.
+   - `emergencies.ts`: Mock data source for emergency information.
 
-4. **Pages**:  
-   - Each file in `pages/` corresponds to a specific route or feature (e.g., map, coupons, tasks).  
+3. **UI Components**:
 
-5. **Styling**:  
+   - `CustomNavbar.tsx`: Handles navigation across pages.
+
+4. **Pages**:
+
+   - Each file in `pages/` corresponds to a specific route or feature (e.g., map, coupons, tasks).
+
+5. **Styling**:
    - `App.css`: Global styling for consistent design.
 
-+++
+---
 
 ## How to Use
 
@@ -150,4 +164,4 @@ Start the development server:
 npm run dev
 ```
 
-The app will be available at the given link in console.
+## The app will be available at the given link in console.
