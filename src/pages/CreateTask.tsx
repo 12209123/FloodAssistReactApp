@@ -45,6 +45,7 @@ const CreateTask: React.FC = () => {
       title: formData.title,
       description: formData.description,
       ownerId: getCurrentUserId(),
+      type: "unofficial",
     };
 
     // Add to global array and set as current registered
