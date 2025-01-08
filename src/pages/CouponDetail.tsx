@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, Card, Col, Container, ProgressBar, Row } from 'react-bootstrap';
+import { Card, Col, Container, ProgressBar, Row } from 'react-bootstrap';
 import { IoStorefront } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 
 const storeData = [
@@ -13,48 +13,44 @@ const storeData = [
 ]
 
 const CouponDetail: React.FC = () => {
-  const [progress, setProgress] = useState(100); // Start at 100%
-  const [timeLeft, setTimeLeft] = useState(2 * 60); // Start at 2 minutes in seconds
-  const [isRunning, setIsRunning] = useState(false); // Track if the timer is running
+  const [progress, setProgress] = useState(100);
+  const [timeLeft, setTimeLeft] = useState(2 * 60);
+  const [isRunning, setIsRunning] = useState(false);
   
-  console.log(progress);
   
   const startTimer = () => {
     if (isRunning) return; // Prevent multiple timers
     setIsRunning(true);
   
     const totalTime = 2 * 60 * 1000; // 2 minutes in milliseconds
-    const interval = 1000; // Update every second
+    const interval = 1000; 
     const timer = setInterval(() => {
       setTimeLeft((prevTimeLeft) => {
         const newTimeLeft = prevTimeLeft - 1;
   
-        // Calculate progress based on the new timeLeft value
-        const newProgress = (newTimeLeft * 100) / (2 * 60); // Calculate percentage
+        const newProgress = (newTimeLeft * 100) / (2 * 60);
   
         console.log("timeleft: " + newTimeLeft);
         console.log("totaltime: " + totalTime);
-  
-        // Stop the timer when it reaches 0
+
         if (newTimeLeft <= 0) {
-          clearInterval(timer); // Stop timer when it reaches 0
-          setIsRunning(false); // Reset running state
+          clearInterval(timer);
+          setIsRunning(false);
           return 0;
         }
   
-        // Update the progress state here
-        setProgress(newProgress > 0 ? newProgress : 0); // Ensure progress doesn't go below 0
+        setProgress(newProgress > 0 ? newProgress : 0);
   
         return newTimeLeft;
       });
     }, interval);
   };
 
-  // Format time using date-fns
+
   const formatTime = (seconds: number) => {
-    const date = new Date(0); // Epoch time
-    date.setSeconds(seconds); // Set seconds
-    return format(date, "mm:ss"); // Format as MM:SS
+    const date = new Date(0);
+    date.setSeconds(seconds);
+    return format(date, "mm:ss");
   };
 
   return (
