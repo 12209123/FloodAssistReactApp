@@ -17,7 +17,7 @@ function App() {
     <Router>
       <CustomNavbar>
         <Routes>
-          <Route path="/" element={<Discover />} />
+          <Route path="/" element={<Discover onPositionSelect={() => {}} />} />
           <Route path="/currentTask" element={<CurrentTask />} />
           <Route path="/coupons" element={<Coupons />} />
           <Route path="/createTask" element={<CreateTask />} />
