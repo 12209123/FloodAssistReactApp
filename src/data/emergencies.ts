@@ -5,6 +5,7 @@ export interface EmergencyWaypoint {
   title: string;
   description: string;
   ownerId?: string;
+  type: string;
 }
 
 export const emergencies: EmergencyWaypoint[] = [
@@ -14,6 +15,7 @@ export const emergencies: EmergencyWaypoint[] = [
     priority: "High",
     title: "Emergency in Urfahr",
     description: "Heavy rainfall area. Consider filling sandbags.",
+    type: "official",
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ export const emergencies: EmergencyWaypoint[] = [
     priority: "Medium",
     title: "Emergency near Pöstlingberg",
     description: "Moderate flooding expected. Secure valuables.",
+    type: "official",
   },
   {
     id: 3,
@@ -28,5 +31,6 @@ export const emergencies: EmergencyWaypoint[] = [
     priority: "Low",
     title: "Emergency in Plesching",
     description: "Light flood risk. Stay informed.",
+    type: "official",
   },
 ];
