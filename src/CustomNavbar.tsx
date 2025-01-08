@@ -53,7 +53,6 @@ const CustomNavbar = ({ children }: { children: ReactNode }) => {
           ))}
       </Col>
 
-      {/* Main Content */}
       <Col className="flex-grow-1">
         {children}
       </Col>
