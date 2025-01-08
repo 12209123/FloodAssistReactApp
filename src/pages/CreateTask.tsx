@@ -1,14 +1,15 @@
-// CreateTask.tsx
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { EmergencyWaypoint, emergencies } from "../data/emergencies";
-// Or however you store your global emergencies
-import { setCurrentRegisteredEmergency } from "../globalRegistrationStore";
-import { getCurrentUserId } from "../globalRegistrationStore"; // We just created this
+import {
+  setCurrentRegisteredEmergency,
+  getCurrentUserId,
+} from "../globalRegistrationStore";
 import MapView from "./Discover";
 
 const CreateTask: React.FC = () => {
-  const navigate = useNavigate(); // <-- to navigate programmatically
+  const navigate = useNavigate();
+
   const [nextId, setNextId] = useState(() => {
     if (emergencies.length === 0) return 1;
     const maxId = Math.max(...emergencies.map((e) => e.id));
@@ -40,24 +41,18 @@ const CreateTask: React.FC = () => {
     const newEmergency: EmergencyWaypoint = {
       id: nextId,
       position: [Number(formData.positionLat), Number(formData.positionLng)],
-      priority: formData.priority,
+      priority: formData.priority, // e.g. "low", "medium", or "high"
       title: formData.title,
       description: formData.description,
-
-      // <-- The key line: make the current user the owner
       ownerId: getCurrentUserId(),
     };
 
-    // Push to global array
+    // Add to global array and set as current registered
     emergencies.push(newEmergency);
-
-    // Auto-register this user to the newly created emergency
     setCurrentRegisteredEmergency(newEmergency.id);
 
-    // Prepare next ID for subsequent tasks
+    // Increment ID and reset form
     setNextId(nextId + 1);
-
-    // Reset form
     setFormData({
       positionLat: "",
       positionLng: "",
@@ -66,17 +61,39 @@ const CreateTask: React.FC = () => {
       description: "",
     });
 
-    alert(
-      "New emergency added (in memory) and you are registered as the owner!"
-    );
-    console.log("Updated globalEmergencies:", emergencies);
+    alert("New emergency added and you are registered as the owner!");
+    console.log("Updated emergencies:", emergencies);
     navigate("/currentTask");
   };
 
-  return (
-    <div>
-      <h1>Create Task Page</h1>
+  const renderFieldRow = (
+    label: string,
+    child: React.ReactNode,
+    required = false
+  ) => (
+    <div
+      style={{
+        marginBottom: "0.75rem",
+        display: "flex",
+        alignItems: "center",
+      }}>
+      <label
+        style={{
+          width: "90px",
+          marginRight: "0.5rem",
+          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}>
+        {label}
+        {required && <span style={{ color: "red", marginLeft: "4px" }}>*</span>}
+      </label>
+      <div style={{ flex: 1 }}>{child}</div>
+    </div>
+  );
 
+  return (
+    <div style={{ padding: "1rem" }}>
       {showMap ? (
         <div style={{ width: "100%", height: "400px" }}>
           <MapView
@@ -87,51 +104,100 @@ const CreateTask: React.FC = () => {
       ) : (
         <form
           onSubmit={handleSubmit}
-          style={{ maxWidth: "400px", margin: "auto" }}>
-          {/* ID Field (readOnly) */}
-          <div style={{ marginBottom: "1em" }}>
-            <label>ID</label>
+          style={{
+            maxWidth: "450px",
+            margin: "0 auto",
+            padding: "1rem",
+            border: "none",
+            backgroundColor: "#fff",
+          }}>
+          <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
+            Create a New Emergency
+          </h2>
+
+          {renderFieldRow(
+            "ID",
             <input
               type="number"
               value={nextId}
               readOnly
-              style={{ backgroundColor: "#f0f0f0" }}
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#f0f0f0",
+                color: "#000",
+              }}
             />
-          </div>
+          )}
 
-          <div style={{ marginBottom: "1em" }}>
-            <label>Latitude</label>
+          {renderFieldRow(
+            "Latitude",
             <input
               type="text"
               value={formData.positionLat}
               readOnly
-              placeholder="Set position from map"
+              placeholder="Set position below"
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#fafafa",
+                color: "#000",
+              }}
             />
-          </div>
-          <div style={{ marginBottom: "1em" }}>
-            <label>Longitude</label>
+          )}
+
+          {renderFieldRow(
+            "Longitude",
             <input
               type="text"
               value={formData.positionLng}
               readOnly
-              placeholder="Set position from map"
+              placeholder="Set position below"
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#fafafa",
+                color: "#000",
+              }}
             />
-          </div>
+          )}
 
-          <div style={{ marginBottom: "1em" }}>
-            <label>Priority</label>
-            <input
-              type="text"
+          {renderFieldRow(
+            "Priority",
+            <select
               value={formData.priority}
               onChange={(e) =>
                 setFormData({ ...formData, priority: e.target.value })
               }
               required
-            />
-          </div>
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#fff",
+                color: "black",
+              }}>
+              <option value="" disabled></option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>,
+            true
+          )}
 
-          <div style={{ marginBottom: "1em" }}>
-            <label>Title</label>
+          {renderFieldRow(
+            "Title",
             <input
               type="text"
               value={formData.title}
@@ -139,26 +205,49 @@ const CreateTask: React.FC = () => {
                 setFormData({ ...formData, title: e.target.value })
               }
               required
-            />
-          </div>
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />,
+            true
+          )}
 
-          <div style={{ marginBottom: "1em" }}>
-            <label>Description</label>
+          {renderFieldRow(
+            "Description",
             <textarea
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
               required
-            />
-          </div>
+              style={{
+                width: "100%",
+                padding: "0.4rem",
+                fontSize: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />,
+            true
+          )}
 
-          <button type="button" onClick={() => setShowMap(true)}>
-            Set Position on Map
-          </button>
-          <button type="submit" style={{ marginLeft: "1em" }}>
-            Create Emergency
-          </button>
+          <div style={{ textAlign: "center", marginTop: "1rem" }}>
+            <button
+              type="button"
+              onClick={() => setShowMap(true)}
+              style={{
+                marginRight: "1em",
+              }}>
+              Set Position
+            </button>
+            <button type="submit" style={{}}>
+              Create
+            </button>
+          </div>
         </form>
       )}
     </div>
