@@ -11,6 +11,7 @@ import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import CustomNavbar from "./CustomNavbar";
 import Emergency from "./pages/Emergency";
+import CouponDetail from "./pages/CouponDetail";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Discover onPositionSelect={() => {}} />} />
           <Route path="/currentTask" element={<CurrentTask />} />
           <Route path="/coupons" element={<Coupons />} />
+          <Route path="/couponDetail" element={<CouponDetail />} />
           <Route path="/createTask" element={<CreateTask />} />
           <Route path="/account" element={<Account />} />
           <Route path="/settings" element={<Settings />} />
