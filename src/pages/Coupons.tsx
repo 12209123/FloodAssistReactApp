@@ -15,8 +15,8 @@ const Coupons: React.FC = () => {
     <Container style={{ marginTop: '20px' }}>
       <h1 style={{fontWeight:"bold", marginBottom:"1em"}}>Your Coupons</h1>
         {couponsData.map((item) => (
-            <Link to="/couponDetail" className="text-decoration-none text-dark">
-              <Card className="shadow border-0" style={{padding:"10px", marginBottom:"10px"}} key={item.id}>
+            <Link key={item.id} to="/couponDetail" className="text-decoration-none text-dark">
+              <Card className="shadow border-0" style={{padding:"10px", marginBottom:"10px"}}>
                 <Row className="align-items-center">
                   <Col xs={2}>
                     <RiCoupon2Line size="2em"/>

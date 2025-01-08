@@ -46,7 +46,7 @@ const CustomNavbar = ({ children }: { children: ReactNode }) => {
         </Row>
           
           {menuItems.map((item, index) => (
-              <Row as={Link} to={item.path} className="text-decoration-none text-dark" style={item.label === "Account" ? { marginTop: "auto" } : undefined} onClick={toggleSidebar} >
+              <Row key={index} as={Link} to={item.path} className="text-decoration-none text-dark" style={item.label === "Account" ? { marginTop: "auto" } : undefined} onClick={toggleSidebar} >
                 <Col xs={3} style={{marginLeft:"1em", marginRight:"1em"}}>{item.icon}</Col>
                 {isExpanded && <Col xs="auto" className="d-flex align-items-center">{item.label}</Col>}
               </Row>
