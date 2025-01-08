@@ -164,4 +164,4 @@ Start the development server:
 npm run dev
 ```
 
-## The app will be available at the given link in console.
+The app will be available at the given link in console.
