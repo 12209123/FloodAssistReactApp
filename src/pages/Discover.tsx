@@ -9,7 +9,12 @@ const MapView: React.FC = () => {
   const zoomLevel = 12;
 
   return (
-    <div className="map-container" style={{ height: "100vh", width: "100%" }}>
+    <div
+      className="map-container"
+      style={{
+        width: "100%",
+        height: "100%",
+      }}>
       <MapContainer
         center={mapCenter}
         zoom={zoomLevel}
