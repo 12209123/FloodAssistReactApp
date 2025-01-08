@@ -6,34 +6,40 @@ A **React based Emergency Management Application** that allows users to create, 
 
 - ## Features
 
-  - **Dynamic Map with Leaflet**:  
-    - Display emergencies as markers on an interactive map.  
-    - Different marker icons for registered/owned emergencies.  
+  - **Dynamic Map with Leaflet**:
 
-  - **Emergency Filtering**:  
-    - Filter by **priority**: High, Medium, Low.  
-    - Filter by **type**: Official, Unofficial.  
+    - Display emergencies as markers on an interactive map.
+    - Different marker icons for registered/owned emergencies.
 
-  - **Emergency Creation**:  
-    - Create new emergencies by selecting a position on the map.  
-    - Automatically register as the owner of newly created emergencies.  
+  - **Emergency Filtering**:
 
-  - **Global State Management**:  
-    - Track the current registered emergency and ownership globally.  
+    - Filter by **priority**: High, Medium, Low.
+    - Filter by **type**: Official, Unofficial.
 
-  - **Coupon Management**:  
-    - View and manage your available coupons in the **Coupons** section.  
-    - Coupons display details such as discounts, expiration dates, and participating stores.  
-    - Redeem coupons with a countdown timer after initiating redemption.  
+  - **Emergency Creation**:
 
-  - **Distribute Coupons When Closing Emergencies**:  
-    - Emergency owners can select users to receive coupons when closing an emergency.  
+    - Create new emergencies by selecting a position on the map.
+    - Automatically register as the owner of newly created emergencies.
+
+  - **Global State Management**:
+
+    - Track the current registered emergency and ownership globally.
+
+  - **Coupon Management**:
+
+    - View and manage your available coupons in the **Coupons** section.
+    - Coupons display details such as discounts, expiration dates, and participating stores.
+    - Redeem coupons with a countdown timer after initiating redemption.
+
+  - **Distribute Coupons When Closing Emergencies**:
+
+    - Emergency owners can select users to receive coupons when closing an emergency.
     - The coupons are then distributed to the selected users.
 
-  - **Responsive UI**:  
-    - Filter popup for priorities and types.  
-    - Toast notifications for feedback (e.g., closing emergencies).  
-    - Interactive coupon details and redemption process.  
+  - **Responsive UI**:
+    - Filter popup for priorities and types.
+    - Toast notifications for feedback (e.g., closing emergencies).
+    - Interactive coupon details and redemption process.
 
 ---
 
@@ -63,6 +69,3 @@ npm run dev
 ```
 
 The app will be available at the given link in console.
-
-+++
-
