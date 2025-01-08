@@ -4,6 +4,7 @@ import { IoStorefront } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
 
 const storeData = [
     { id: 1, storeName: "Huber Handel" },
@@ -13,29 +14,43 @@ const storeData = [
 
 const CouponDetail: React.FC = () => {
   const [progress, setProgress] = useState(100); // Start at 100%
+  const [timeLeft, setTimeLeft] = useState(2 * 60); // Start at 5 minutes in seconds
   const [isRunning, setIsRunning] = useState(false); // Track if the timer is running
 
   const startTimer = () => {
-    console.log("Timer started");
-    
     if (isRunning) return; // Prevent multiple timers
     setIsRunning(true);
 
-    const totalTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const totalTime = 2 * 60 * 1000; // 5 minutes in milliseconds
     const interval = 1000; // Update every second
     const decrement = 100 / (totalTime / interval); // Calculate decrement per interval
 
     const timer = setInterval(() => {
       setProgress((prevProgress) => {
         const newProgress = prevProgress - decrement;
-        if (newProgress <= 0) {
-          clearInterval(timer); // Stop timer at 0%
-          setIsRunning(false); // Reset running state
-          return 0;
-        }
-        return newProgress;
+
+        setTimeLeft((prevTimeLeft) => {
+          const newTimeLeft = prevTimeLeft - 1;
+
+          if (newTimeLeft <= 0) {
+            clearInterval(timer); // Stop timer when it reaches 0
+            setIsRunning(false); // Reset running state
+            return 0;
+          }
+
+          return newTimeLeft;
+        });
+
+        return newProgress > 0 ? newProgress : 0; // Ensure progress doesn't go below 0
       });
     }, interval);
+  };
+
+  // Format time using date-fns
+  const formatTime = (seconds: number) => {
+    const date = new Date(0); // Epoch time
+    date.setSeconds(seconds); // Set seconds
+    return format(date, "mm:ss"); // Format as MM:SS
   };
 
   return (
@@ -50,7 +65,7 @@ const CouponDetail: React.FC = () => {
         <Card.Text className="text-muted text-center">
           Expires: 27.10.2025
         </Card.Text>
-        <ProgressBar className='p-0' label="Redeem Coupon" variant='danger' now={progress} onClick={() => startTimer()} style={{ borderTopLeftRadius: '0', borderTopRightRadius: '0', height:"3em", fontSize:"1em" }}></ProgressBar>
+        <ProgressBar className='p-0' label={isRunning ? "Valid for: " + formatTime(timeLeft) : "Redeem Coupon"} variant='danger' now={progress} onClick={() => startTimer()} style={{ borderTopLeftRadius: '0', borderTopRightRadius: '0', height:"3em", fontSize:"1em" }}></ProgressBar>
       </Card.Body>
     </Card>
 

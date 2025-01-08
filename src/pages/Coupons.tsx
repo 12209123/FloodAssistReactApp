@@ -12,7 +12,7 @@ const couponsData = [
 
 const Coupons: React.FC = () => {
   return (
-    <Container style={{ marginTop: '20px' }}>
+    <Container style={{ marginTop: '20px', maxWidth:"500px" }}>
       <h1 style={{fontWeight:"bold", marginBottom:"1em"}}>Your Coupons</h1>
         {couponsData.map((item) => (
             <Link key={item.id} to="/couponDetail" className="text-decoration-none text-dark">
