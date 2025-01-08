@@ -4,6 +4,7 @@ export interface EmergencyWaypoint {
   priority: string;
   title: string;
   description: string;
+  ownerId?: string;
 }
 
 export const emergencies: EmergencyWaypoint[] = [

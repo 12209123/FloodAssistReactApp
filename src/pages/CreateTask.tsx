@@ -1,13 +1,14 @@
 // CreateTask.tsx
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { EmergencyWaypoint } from "../data/emergencies";
-
-// Import the shared array
-import { emergencies } from "../data/emergencies";
-import MapView from "./Discover"; // adjust path
+import { EmergencyWaypoint, emergencies } from "../data/emergencies";
+// Or however you store your global emergencies
+import { setCurrentRegisteredEmergency } from "../globalRegistrationStore";
+import { getCurrentUserId } from "../globalRegistrationStore"; // We just created this
+import MapView from "./Discover";
 
 const CreateTask: React.FC = () => {
-  // We'll figure out the next ID by looking at the global array
+  const navigate = useNavigate(); // <-- to navigate programmatically
   const [nextId, setNextId] = useState(() => {
     if (emergencies.length === 0) return 1;
     const maxId = Math.max(...emergencies.map((e) => e.id));
@@ -24,7 +25,6 @@ const CreateTask: React.FC = () => {
 
   const [showMap, setShowMap] = useState(false);
 
-  // Callback when the user clicks on the map
   const handlePositionSelect = (lat: number, lng: number) => {
     setFormData({
       ...formData,
@@ -43,12 +43,18 @@ const CreateTask: React.FC = () => {
       priority: formData.priority,
       title: formData.title,
       description: formData.description,
+
+      // <-- The key line: make the current user the owner
+      ownerId: getCurrentUserId(),
     };
 
-    // Push to our global array
+    // Push to global array
     emergencies.push(newEmergency);
 
-    // Increment the ID for the next creation
+    // Auto-register this user to the newly created emergency
+    setCurrentRegisteredEmergency(newEmergency.id);
+
+    // Prepare next ID for subsequent tasks
     setNextId(nextId + 1);
 
     // Reset form
@@ -60,15 +66,17 @@ const CreateTask: React.FC = () => {
       description: "",
     });
 
-    alert("New emergency added!");
+    alert(
+      "New emergency added (in memory) and you are registered as the owner!"
+    );
     console.log("Updated globalEmergencies:", emergencies);
+    navigate("/currentTask");
   };
 
   return (
     <div>
       <h1>Create Task Page</h1>
 
-      {/* Toggle between map or form */}
       {showMap ? (
         <div style={{ width: "100%", height: "400px" }}>
           <MapView
@@ -80,7 +88,7 @@ const CreateTask: React.FC = () => {
         <form
           onSubmit={handleSubmit}
           style={{ maxWidth: "400px", margin: "auto" }}>
-          {/* ID field - read-only */}
+          {/* ID Field (readOnly) */}
           <div style={{ marginBottom: "1em" }}>
             <label>ID</label>
             <input
@@ -97,7 +105,7 @@ const CreateTask: React.FC = () => {
               type="text"
               value={formData.positionLat}
               readOnly
-              placeholder="Set position below"
+              placeholder="Set position from map"
             />
           </div>
           <div style={{ marginBottom: "1em" }}>
@@ -106,7 +114,7 @@ const CreateTask: React.FC = () => {
               type="text"
               value={formData.positionLng}
               readOnly
-              placeholder="Set position below"
+              placeholder="Set position from map"
             />
           </div>
 
@@ -146,7 +154,7 @@ const CreateTask: React.FC = () => {
           </div>
 
           <button type="button" onClick={() => setShowMap(true)}>
-            Set Position
+            Set Position on Map
           </button>
           <button type="submit" style={{ marginLeft: "1em" }}>
             Create Emergency
