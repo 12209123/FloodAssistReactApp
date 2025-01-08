@@ -3,8 +3,8 @@
 const Settings: React.FC = () => {
   return (
     <div>
-      <h1>Account Page</h1>
-      <p>Welcome to your account page.</p>
+      <h1>Settings Page</h1>
+      <p>Welcome to your settings page.</p>
     </div>
   );
 };

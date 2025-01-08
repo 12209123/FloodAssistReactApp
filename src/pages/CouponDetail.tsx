@@ -14,34 +14,38 @@ const storeData = [
 
 const CouponDetail: React.FC = () => {
   const [progress, setProgress] = useState(100); // Start at 100%
-  const [timeLeft, setTimeLeft] = useState(2 * 60); // Start at 5 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(2 * 60); // Start at 2 minutes in seconds
   const [isRunning, setIsRunning] = useState(false); // Track if the timer is running
-
+  
+  console.log(progress);
+  
   const startTimer = () => {
     if (isRunning) return; // Prevent multiple timers
     setIsRunning(true);
-
-    const totalTime = 2 * 60 * 1000; // 5 minutes in milliseconds
+  
+    const totalTime = 2 * 60 * 1000; // 2 minutes in milliseconds
     const interval = 1000; // Update every second
-    const decrement = 100 / (totalTime / interval); // Calculate decrement per interval
-
     const timer = setInterval(() => {
-      setProgress((prevProgress) => {
-        const newProgress = prevProgress - decrement;
-
-        setTimeLeft((prevTimeLeft) => {
-          const newTimeLeft = prevTimeLeft - 1;
-
-          if (newTimeLeft <= 0) {
-            clearInterval(timer); // Stop timer when it reaches 0
-            setIsRunning(false); // Reset running state
-            return 0;
-          }
-
-          return newTimeLeft;
-        });
-
-        return newProgress > 0 ? newProgress : 0; // Ensure progress doesn't go below 0
+      setTimeLeft((prevTimeLeft) => {
+        const newTimeLeft = prevTimeLeft - 1;
+  
+        // Calculate progress based on the new timeLeft value
+        const newProgress = (newTimeLeft * 100) / (2 * 60); // Calculate percentage
+  
+        console.log("timeleft: " + newTimeLeft);
+        console.log("totaltime: " + totalTime);
+  
+        // Stop the timer when it reaches 0
+        if (newTimeLeft <= 0) {
+          clearInterval(timer); // Stop timer when it reaches 0
+          setIsRunning(false); // Reset running state
+          return 0;
+        }
+  
+        // Update the progress state here
+        setProgress(newProgress > 0 ? newProgress : 0); // Ensure progress doesn't go below 0
+  
+        return newTimeLeft;
       });
     }, interval);
   };
@@ -65,7 +69,7 @@ const CouponDetail: React.FC = () => {
         <Card.Text className="text-muted text-center">
           Expires: 27.10.2025
         </Card.Text>
-        <ProgressBar className='p-0' label={isRunning ? "Valid for: " + formatTime(timeLeft) : "Redeem Coupon"} variant='danger' now={progress} onClick={() => startTimer()} style={{ borderTopLeftRadius: '0', borderTopRightRadius: '0', height:"3em", fontSize:"1em" }}></ProgressBar>
+        <ProgressBar className='p-0' label={isRunning ? "Valid for: " + formatTime(timeLeft) : "Redeem Coupon"} variant='danger' now={progress} onClick={() => startTimer()} style={{ borderTopLeftRadius: '0', borderTopRightRadius: '0', height:"3em", fontSize:"1em", backgroundColor:"white" }}></ProgressBar>
       </Card.Body>
     </Card>
 
