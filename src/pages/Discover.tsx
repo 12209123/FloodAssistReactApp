@@ -101,11 +101,10 @@ const MapView: React.FC<MapProps> = ({
     );
   };
 
-  // Filter emergencies by selected priorities and types
   const filteredEmergencies = emergencies.filter(
     (emergency) =>
       selectedPriorities.includes(emergency.priority) &&
-      selectedTypes.includes(emergency.type) // Assume `emergency.type` is "official" or "unofficial"
+      selectedTypes.includes(emergency.type.toLowerCase())
   );
 
   return (
