@@ -36,8 +36,8 @@ const SelectPositionMap: React.FC<MapProps> = ({ onPositionSelect }) => {
 // Normal (default) marker
 const MarkerIcon = L.icon({
   iconUrl: iconUrl,
-  iconSize: [32, 32], // Adjust size as needed
-  iconAnchor: [16, 32], // The "tip" of the marker
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
   popupAnchor: [0, -32],
 });
 
