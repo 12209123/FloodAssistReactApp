@@ -94,9 +94,9 @@ const CreateTask: React.FC = () => {
   );
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <>
       {showMap ? (
-        <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height: "100vh" }}>
           <MapView
             showEmergencies={false}
             onPositionSelect={handlePositionSelect}
@@ -108,7 +108,7 @@ const CreateTask: React.FC = () => {
           style={{
             maxWidth: "450px",
             margin: "0 auto",
-            padding: "1rem",
+            padding: "2rem",
             border: "none",
             backgroundColor: "#fff",
           }}>
@@ -251,7 +251,7 @@ const CreateTask: React.FC = () => {
           </div>
         </form>
       )}
-    </div>
+    </>
   );
 };
 
