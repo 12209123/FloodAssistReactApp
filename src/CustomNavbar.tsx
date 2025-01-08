@@ -1,39 +1,57 @@
-import Sidebar from 'react-bootstrap-sidebar-menu';
+import { useState } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { FiMenu } from "react-icons/fi";
+import { ReactNode } from 'react';
+import { RiCoupon2Line } from "react-icons/ri";
+import { FaRegMap } from "react-icons/fa6";
+import { FiPlusCircle } from "react-icons/fi";
+import { MdStars } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import './CustomNavbar.scss';
 
-const CustomNavbar = () => {
+
+const CustomNavbar = ({ children }: { children: ReactNode }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const menuItems = [
+    { icon: <FaRegMap size="3em"/>, label: 'Discover', path: '/'},
+    { icon: <MdStars size="3em"/>, label: 'Current Task', path: '/currentTask'},
+    { icon: <RiCoupon2Line size="3em"/>, label: 'Coupons', path: '/coupons'},
+    { icon: <FiPlusCircle size="3em"/>, label: 'Create Task', path: '/createTask'},
+  ];
+
   return (
-    <Sidebar>
-      <Sidebar.Collapse>
-        <Sidebar.Header>
-          <Sidebar.Brand>Brand</Sidebar.Brand>
-          <Sidebar.Toggle />
-        </Sidebar.Header>
-        <Sidebar.Body>
-          <Sidebar.Nav>
-            <Sidebar.Nav.Link>
-              <Sidebar.Nav.Icon><span>menu item icon</span></Sidebar.Nav.Icon>
-              <Sidebar.Nav.Title><span>menu item title</span></Sidebar.Nav.Title>
-            </Sidebar.Nav.Link>
-            <Sidebar.Sub>
-              <Sidebar.Sub.Toggle>
-                <Sidebar.Nav.Icon />
-                <Sidebar.Nav.Title><span>sub menu item title</span></Sidebar.Nav.Title>
-              </Sidebar.Sub.Toggle>
-              <Sidebar.Sub.Collapse>
-                <Sidebar.Nav>
-                  <Sidebar.Nav.Link>
-                    <Sidebar.Nav.Icon><span>sum menu item icon</span></Sidebar.Nav.Icon>
-                    <Sidebar.Nav.Title><span>sub menu item title</span></Sidebar.Nav.Title>
-                  </Sidebar.Nav.Link>
-                </Sidebar.Nav>
-              </Sidebar.Sub.Collapse>
-            </Sidebar.Sub>
-          </Sidebar.Nav>
-        </Sidebar.Body>
-      </Sidebar.Collapse>
-    </Sidebar>
+    <Container fluid className="d-flex vh-100 p-0">
+      <Col
+        xs="auto"
+      >
+        <Row>
+          <Col xs="auto">
+            <Button
+              variant="tertiary"
+              onClick={toggleSidebar}
+            >
+              <FiMenu size="3em"/>
+            </Button>
+          </Col>
+        </Row>
+          
+          {menuItems.map((item, index) => (
+              <Row as={Link} to={item.path} className="text-decoration-none text-dark">
+                <Col xs={3} style={{marginLeft:"1em", marginRight:"1em"}}>{item.icon}</Col>
+                {isExpanded && <Col xs="auto" className="d-flex align-items-center">{item.label}</Col>}
+              </Row>
+          ))}
+      </Col>
+
+      {/* Main Content */}
+      <Col className="flex-grow-1">
+        {children}
+      </Col>
+    </Container>
   );
 };
 

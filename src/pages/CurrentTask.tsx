@@ -3,7 +3,7 @@ import React from 'react';
 const CurrentTask: React.FC = () => {
   return (
     <div>
-      <h1>Account Page</h1>
+      <h1>Current Task Page</h1>
       <p>Welcome to your account page.</p>
     </div>
   );
