@@ -15,13 +15,11 @@ function EmergencyDetail() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showAlreadyRegisteredToast, setShowAlreadyRegisteredToast] =
     useState(false);
-  const [showRemovedToast, setShowRemovedToast] = useState(false);
 
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate(); // <-- to navigate programmatically
+  const navigate = useNavigate();
   const waypointId = Number(id);
 
-  // Find the matching emergency from the shared array
   const waypoint = emergencies.find((wp) => wp.id === waypointId);
 
   if (!waypoint) {
@@ -33,14 +31,11 @@ function EmergencyDetail() {
     );
   }
 
-  // We check if the current user is the *owner*
   const currentUserId = getCurrentUserId();
   const isOwner = waypoint.ownerId === currentUserId;
 
-  // Normal "registered" logic if the user is not owner
   const [isRegistered, setIsRegistered] = useState(false);
 
-  // Chat states
   const [messages, setMessages] = useState<string[]>([
     "Hello from user1",
     "Stay calm, I'm on my way!",
@@ -49,11 +44,9 @@ function EmergencyDetail() {
   const [newMessage, setNewMessage] = useState("");
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // "Close Emergency" modal states
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  // Hardcoded list of 7 users to choose from when closing
   const availableUsers = [
     "user1",
     "user2",
@@ -64,14 +57,12 @@ function EmergencyDetail() {
     "user7",
   ];
 
-  // On mount, check if this user is already registered
   useEffect(() => {
     if (getCurrentRegisteredEmergency() === waypointId) {
       setIsRegistered(true);
     }
   }, [waypointId]);
 
-  // Auto-scroll chat when messages change
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -79,7 +70,6 @@ function EmergencyDetail() {
     }
   }, [messages]);
 
-  // ===== Handlers: Register / Unregister / Report / Confirm =====
   const handleRegister = () => {
     if (
       isAnyEmergencyRegistered() &&
@@ -92,7 +82,6 @@ function EmergencyDetail() {
     setIsRegistered(true);
   };
 
-  // ===== Chat Send =====
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim() === "") return;
@@ -100,13 +89,10 @@ function EmergencyDetail() {
     setNewMessage("");
   };
 
-  // ===== "Close Emergency" Flow for Owner =====
   const handleCloseEmergency = () => {
-    // Show the "choose coupon recipients" modal
     setShowCloseModal(true);
   };
 
-  // Toggle user selection in the modal
   const handleToggleUser = (user: string) => {
     setSelectedUsers((prev) => {
       if (prev.includes(user)) {
@@ -117,17 +103,14 @@ function EmergencyDetail() {
     });
   };
 
-  // Confirm close (owner picks who gets coupons)
   const handleConfirmClose = () => {
     console.log("Owner gave coupons to:", selectedUsers);
 
-    // Now remove this emergency from the array so it disappears from the map
     const index = emergencies.findIndex((wp) => wp.id === waypointId);
     if (index !== -1) {
       emergencies.splice(index, 1);
     }
 
-    // If the user was the owner and also 'registered', clear registration
     if (getCurrentRegisteredEmergency() === waypointId) {
       setCurrentRegisteredEmergency(null);
     }
@@ -135,21 +118,15 @@ function EmergencyDetail() {
     setShowCloseModal(false);
     setSelectedUsers([]);
 
-    // Navigate back to the map
     navigate("/", { state: { showRemovedToast: true } });
   };
 
   const handleCancelClose = () => {
-    // If the user cancels, just hide the modal and go back to map
     setShowCloseModal(false);
   };
 
-  // Decide whether to show chat:
-  // - The owner might also want to see the chat,
-  //   so let's allow chat if you're the owner OR you're registered.
   const showChat = isOwner || isRegistered;
 
-  // ===== Render =====
   return (
     <div style={{ padding: "1rem" }}>
       <Modal show={showUnregister} onHide={() => setShowUnregister(false)}>
@@ -315,7 +292,7 @@ function EmergencyDetail() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 9999, // ensure it's on top
+            zIndex: 9999,
           }}>
           <div
             style={{
