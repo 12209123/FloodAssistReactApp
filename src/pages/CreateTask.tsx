@@ -6,9 +6,11 @@ import {
   getCurrentUserId,
 } from "../globalRegistrationStore";
 import MapView from "./Discover";
+import { Toast } from "react-bootstrap";
 
 const CreateTask: React.FC = () => {
   const navigate = useNavigate();
+  const [showTaskCreatedToast, setShowTaskCreatedToast] = useState(false);
 
   const [nextId, setNextId] = useState(() => {
     if (emergencies.length === 0) return 1;
@@ -62,7 +64,7 @@ const CreateTask: React.FC = () => {
       description: "",
     });
 
-    alert("New emergency added and you are registered as the owner!");
+    setShowTaskCreatedToast(true);
     console.log("Updated emergencies:", emergencies);
     navigate("/currentTask");
   };
@@ -95,6 +97,10 @@ const CreateTask: React.FC = () => {
 
   return (
     <>
+      <Toast style={{position:"fixed", left: "90%", transform: "translateX(-60%)"}} show={showTaskCreatedToast} onClose={() => setShowTaskCreatedToast(false)}>
+        <Toast.Header></Toast.Header>
+        <Toast.Body>New emergency added and you are registered as the owner!</Toast.Body>
+      </Toast>
       {showMap ? (
         <div style={{ width: "100%", height: "100vh" }}>
           <MapView

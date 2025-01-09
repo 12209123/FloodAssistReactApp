@@ -55,10 +55,10 @@ const MapView: React.FC<MapProps> = ({
 }) => {
   const location = useLocation();
   const [showRemovedToast, setShowRemovedToast] = useState(false);
-
   useEffect(() => {
-    if (location.state?.message) {
-      setShowRemovedToast(location.state.showRemovedToast);
+    if (location.state?.showRemovedToast) {
+      console.log("showing toast");
+      setShowRemovedToast(true);
     } else {
       console.log("not showing toast");
     }
@@ -67,7 +67,6 @@ const MapView: React.FC<MapProps> = ({
   const mapCenter: [number, number] = [48.30694, 14.28583];
   const zoomLevel = 12;
 
-  // Initial state for priorities and types (all checked by default)
   const [showToast, setShowToast] = useState(false);
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([
     "High",
@@ -81,7 +80,6 @@ const MapView: React.FC<MapProps> = ({
 
   const toggleToast = () => setShowToast(!showToast);
 
-  // Handle priority checkbox changes
   const handlePriorityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSelectedPriorities((prev) =>
@@ -91,7 +89,6 @@ const MapView: React.FC<MapProps> = ({
     );
   };
 
-  // Handle type checkbox changes
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSelectedTypes((prev) =>
@@ -111,12 +108,10 @@ const MapView: React.FC<MapProps> = ({
     <div
       className="map-container"
       style={{
-        width: "100%",
-        height: "100%",
-        position: "relative",
+        width: "100%", height: "100vh"
       }}>
       <Toast
-        style={{ position: "fixed" }}
+        style={{ position: "fixed", left: "90%", transform: "translateX(-60%)" }}
         show={showRemovedToast}
         onClose={() => setShowRemovedToast(false)}>
         <Toast.Header></Toast.Header>

@@ -28,11 +28,10 @@ const CustomNavbar = ({ children }: { children: ReactNode }) => {
   ];
 
   return (
-    <Container fluid className="d-flex vh-100 p-0">
-      <Col
-        xs="auto"
-        style={{ display: 'flex', flexDirection: 'column', paddingBottom:"1em"}}
-        
+    <Container fluid className="d-flex p-0">
+      <Container
+        className='position-fixed d-flex flex-column bg-light p-0 pb-3'
+        style={{ paddingBottom:"1em", minHeight:"100vh", maxHeight:"100vh", zIndex:1, width:"auto"}}
       >
         <Row>
           <Col xs="auto">
@@ -44,18 +43,17 @@ const CustomNavbar = ({ children }: { children: ReactNode }) => {
             </Button>
           </Col>
         </Row>
-          
           {menuItems.map((item, index) => (
               <Row key={index} as={Link} to={item.path} className="text-decoration-none text-dark" style={item.label === "Account" ? { marginTop: "auto" } : undefined} onClick={() => setIsExpanded(false)} >
                 <Col xs={3} style={{marginLeft:"1em", marginRight:"1em"}}>{item.icon}</Col>
                 {isExpanded && <Col xs="auto" className="d-flex align-items-center">{item.label}</Col>}
               </Row>
           ))}
-      </Col>
+      </Container>
 
-      <Col className="flex-grow-1">
+      <Container fluid className='m-0 p-0 z-index-0' style={{zIndex:0}}>
         {children}
-      </Col>
+      </Container>
     </Container>
   );
 };

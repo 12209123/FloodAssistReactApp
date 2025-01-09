@@ -48,13 +48,13 @@ function EmergencyDetail() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
   const availableUsers = [
-    "user1",
-    "user2",
-    "user3",
-    "user4",
-    "user5",
-    "user6",
-    "user7",
+    "Elias Berger",
+    "Lukas Werner",
+    "Jacob Allan Jeyaraj",
+    "Leo Hahnen",
+    "Daniel Wimmer",
+    "Max Musterfrau",
+    "Max Mustermann",
   ];
 
   useEffect(() => {
@@ -188,7 +188,7 @@ function EmergencyDetail() {
         </Modal.Footer>
       </Modal>
       <Toast
-        style={{ position: "fixed" }}
+        style={{ position: "fixed", left: "90%", transform: "translateX(-60%)" }}
         show={showAlreadyRegisteredToast}
         onClose={() => setShowAlreadyRegisteredToast(false)}>
         <Toast.Header></Toast.Header>
@@ -242,7 +242,7 @@ function EmergencyDetail() {
 
       {/* Show chat if user is owner OR registered */}
       {showChat && (
-        <div style={{ marginTop: "2rem", maxWidth: "500px", margin: "auto" }}>
+        <div style={{ marginTop: "1rem", maxWidth: "500px", margin: "auto" }}>
           <h3>Local Chat</h3>
           <div
             ref={chatContainerRef}
